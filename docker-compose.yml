@@ -35,6 +35,15 @@ x-redash-service: &redash-service
   restart: always
 
 services:
+  mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3309:3306
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
   postgres:
     image: postgres:13
     env_file:
