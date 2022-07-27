@@ -142,3 +142,6 @@ logs/
 
 # env
 .env
+
+# sql data folder
+/data/mysql/
