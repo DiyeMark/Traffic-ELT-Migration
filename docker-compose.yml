@@ -36,13 +36,18 @@ x-redash-service: &redash-service
 
 services:
   mysql:
-    image: mysql:5.7
+    image: mysql:latest
     restart: unless-stopped
     tty: true
     ports:
       - 3309:3306
     volumes:
       - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: airflow
+      MYSQL_ROOT_PASSWORD: airflow
+      MYSQL_PASSWORD: airflow
+      MYSQL_USER: airflow
 
   postgres:
     image: postgres:13
