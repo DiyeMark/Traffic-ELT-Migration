@@ -36,12 +36,12 @@ x-redash-service: &redash-service
 
 x-superset-image: &superset-image apache/superset:${TAG:-latest-dev}
 x-superset-depends-on: &superset-depends-on
-  - db
+  - postgres
   - redis
 x-superset-volumes: &superset-volumes
   # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
-  - ./docker:/app/docker
-  - superset_home:/app/superset_home
+    - ./superset:/app/docker
+    - superset_home:/app/superset_home
 
 services:
   mysql:
@@ -51,12 +51,9 @@ services:
     ports:
       - 3309:3306
     volumes:
-      - ./data/mysql:/var/lib/mysql
-    environment:
-      MYSQL_DATABASE: airflow
-      MYSQL_ROOT_PASSWORD: airflow
-      MYSQL_PASSWORD: airflow
-      MYSQL_USER: airflow
+      - mysql-db-volume:/var/lib/mysql
+    env_file:
+      - .env
 
   postgres:
     image: postgres:13
@@ -254,19 +251,19 @@ services:
     env_file: .env
     image: *superset-image
     container_name: superset_app
-    command: [ "/app/docker/docker-bootstrap.sh", "app-gunicorn" ]
+    command: ["/app/docker/docker-bootstrap.sh", "app-gunicorn"]
     user: "root"
     restart: unless-stopped
     ports:
-      - 8088:8088
+        - "8088:8088"
     depends_on: *superset-depends-on
     volumes: *superset-volumes
 
   superset-init:
     image: *superset-image
     container_name: superset_init
-    command: [ "/app/docker/docker-init.sh" ]
-    env_file: docker/.env-non-dev
+    command: ["/app/docker/docker-init.sh"]
+    env_file: .env
     depends_on: *superset-depends-on
     user: "root"
     volumes: *superset-volumes
@@ -274,8 +271,8 @@ services:
   superset-worker:
     image: *superset-image
     container_name: superset_worker
-    command: [ "/app/docker/docker-bootstrap.sh", "worker" ]
-    env_file: docker/.env-non-dev
+    command: ["/app/docker/docker-bootstrap.sh", "worker"]
+    env_file: .env
     restart: unless-stopped
     depends_on: *superset-depends-on
     user: "root"
@@ -284,14 +281,14 @@ services:
   superset-worker-beat:
     image: *superset-image
     container_name: superset_worker_beat
-    command: [ "/app/docker/docker-bootstrap.sh", "beat" ]
-    env_file: docker/.env-non-dev
+    command: ["/app/docker/docker-bootstrap.sh", "beat"]
+    env_file: .env
     restart: unless-stopped
     depends_on: *superset-depends-on
     user: "root"
     volumes: *superset-volumes
 
-
 volumes:
   postgres-db-volume:
+  mysql-db-volume:
   superset_home:
