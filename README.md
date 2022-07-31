@@ -16,7 +16,7 @@
   <h3 align="center">Traffic-ELT Migration</h3>
 
   <p align="center">
-    A dockerized ELT pipeline.
+    A dockerized ELT Migration pipeline.
     <br />
     <a href="https://open-traffic-dbt-doc.netlify.app"><strong>Explore the docs »</strong></a>
     <br />
@@ -54,17 +54,15 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 ![ELT](screenshots/traffic-elt-migration.jpg)
-A dockerized Extract, Load, Transform (ELT) pipeline with PostgreSQL, Airflow, DBT, and a Redash.
+A dockerized Extract, Load, Transform (ELT) pipeline with MySQL, Airflow, DBT, and a Apache Superset.
 
 ### Built With
 
 Tech Stack used in this project
 * [![Docker][Docker.com]][Docker-url]
-* [![Postgres][Postgresql.com]][Postgresql-url]
 * [![MySQL][Mysql.com]][Mysql-url]
 * [![Airflow][Airflow.com]][Airflow-url]
 * [![DBT][DBT.com]][DBT-url]
-* [![Redash][Redash.com]][Redash-url]
 * [![Superset][Superset.com]][Superset-url]
 
 <!-- GETTING STARTED -->
@@ -78,11 +76,11 @@ Make sure you have docker installed on local machine.
 
 1. Clone the repo
     ```sh
-    git clone https://https://github.com/DiyeMark/Traffic-ELT.git
+    git clone https://github.com/DiyeMark/Traffic-ELT-Migration.git
     ```
 2. Navigate to the folder
     ```sh
-    cd Traffic-ELT
+    cd Traffic-ELT-Migration
     ```
 3. Build an airflow image
     ```sh
@@ -98,9 +96,9 @@ Make sure you have docker installed on local machine.
     activate and trigger load_dag
     activate and trigger dbt_dag
     ```
-6. Access redash dashboard
+6. Access Apache Superset dashboard
     ```JS
-    Navigate to `http://localhost:5000/` on the browser
+    Navigate to `http://localhost:8088/` on the browser
     ```
 
 <!-- CONTRIBUTING -->
