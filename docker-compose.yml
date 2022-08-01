@@ -46,7 +46,7 @@ x-superset-volumes: &superset-volumes
 services:
   mysql:
     image: mysql:latest
-    restart: unless-stopped
+    restart: always
     tty: true
     ports:
       - 3309:3306
